@@ -1,6 +1,6 @@
 /*
  * Copyright © 2016 Superwatermelon Limited.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -22,46 +22,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
+package superwatermelon.math
 
-import org.scalatest.FunSpec
-import superwatermelon.math.bigmatrix._
+package object bigmatrix {
 
-class BigDecimalMatrixTest extends FunSpec {
+  type BigDecimalVector = vector.BigDecimalVector
+  val BigDecimalVector = vector.BigDecimalVector
 
-  describe("BigDecimalMatrix") {
-
-    it("Can be created from a Seq of Seqs of BigDecimals") {
-
-      import superwatermelon.math.bigmatrix.Implicits._
-
-      val matrix: BigDecimalMatrix = Seq(
-        Seq(
-          BigDecimal("12.0"),
-          BigDecimal("0.4")
-        ),
-        Seq(
-          BigDecimal("29.3"),
-          BigDecimal("123.76")
-        )
-      )
-
-      assert(matrix.isInstanceOf[BigDecimalMatrix])
-
-    }
-
-    it("Can also be created from a Seq of BigDecimalVectors") {
-
-      import superwatermelon.math.bigmatrix.Implicits._
-
-      val matrix: BigDecimalMatrix = Seq(
-        BigDecimalVector("42.3", "23.5"),
-        BigDecimalVector("321.53", "230.12")
-      )
-
-      assert(matrix.isInstanceOf[BigDecimalMatrix])
-
-    }
-
-  }
+  type BigDecimalMatrix = tensor.BigDecimalMatrix
+  val BigDecimalMatrix = tensor.BigDecimalMatrix
 
 }

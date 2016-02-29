@@ -24,17 +24,17 @@
  */
 
 import org.scalatest.FunSpec
-import superwatermelon.math.bigmatrix.BigDecimalVector
+import superwatermelon.math.bigmatrix._
 
 class BigDecimalVectorTest extends FunSpec {
 
-  import superwatermelon.math.bigmatrix.Implicits._
-
   describe("BigDecimalVector") {
 
-    describe("Dot product ∙") {
+    describe("Dot product: dot, ∙") {
 
-      it("Calculates [0.2, 0.3, 0.4] ∙ [0.2, 0.5, 0.8] = 0.51") {
+      it("Calculates the dot product of two vectors") {
+
+        import superwatermelon.math.bigmatrix.Implicits._
 
         val a = Seq(
           BigDecimal("0.2"),
@@ -51,7 +51,9 @@ class BigDecimalVectorTest extends FunSpec {
 
       }
 
-      it("Retains precision so that [0.2, 0.5, 0.0] ∙ [0.5, 0.4, 0.3] = 0.3 and not 0.30000000000000004") {
+      it("Retains precision by using BigDecimal") {
+
+        import superwatermelon.math.bigmatrix.Implicits._
 
         val a = Seq(
           BigDecimal("0.2"),
@@ -64,23 +66,48 @@ class BigDecimalVectorTest extends FunSpec {
           BigDecimal("0.3")
         )
 
-        assert((a ∙ b) == BigDecimal("0.3"))
+        assert((a ∙ b) == BigDecimal("0.3")) // Would normally have a rounding error using a double
 
       }
 
     }
 
-    describe("Transpose ᵀ") {
+    describe("Transpose: transpose, ᵀ") {
 
-      val a = Seq(
-        BigDecimal("5.0"),
-        BigDecimal("15.0")
-      )
+      import superwatermelon.math.bigmatrix.Implicits._
 
-      assert(a.ᵀ == BigDecimalVector(Seq(
-        BigDecimal("5.0"),
-        BigDecimal("15.0")
-      )))
+      it("Doesn't do anything to a Vector") {
+
+        val a = Seq(
+          BigDecimal("5.0"),
+          BigDecimal("15.0")
+        )
+
+        assert(a.ᵀ == BigDecimalVector("5.0", "15.0"))
+
+      }
+
+    }
+
+    describe("Multiply: multiply, *") {
+
+      it("Performs element-wise multiplication with a vector") {
+
+        val a = BigDecimalVector("0.2", "0.5", "2.0")
+        val b = BigDecimalVector("0.5", "0.4", "0.1")
+
+        assert(a * b == BigDecimalVector("0.1", "0.2", "0.2"))
+
+      }
+
+      it("Performs element-wise multiplication with a scalar") {
+
+        val a = BigDecimalVector("0.2", "0.5", "2.0")
+        val b = BigDecimal("0.5")
+
+        assert(a * b == BigDecimalVector("0.1", "0.25", "1.0"))
+
+      }
 
     }
 

@@ -23,7 +23,9 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package superwatermelon.math.bigmatrix
+package superwatermelon.math.bigmatrix.tensor
+
+import superwatermelon.math.bigmatrix.vector.BigDecimalVector
 
 class BigDecimalMatrix(val values: Seq[BigDecimalVector]) {
 

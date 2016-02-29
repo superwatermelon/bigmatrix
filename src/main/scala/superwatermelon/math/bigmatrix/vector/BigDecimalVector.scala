@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package superwatermelon.math.bigmatrix
+package superwatermelon.math.bigmatrix.vector
 
 /**
   *
@@ -33,18 +33,18 @@ class BigDecimalVector(val values: Seq[BigDecimal]) {
 
   /**
     *
-    * @param other
+    * @param vector
     * @return
     */
-  def dot(other: BigDecimalVector): BigDecimal =
-    ((values zip other.values) map Function.tupled (_ * _)).sum
+  def dot(vector: BigDecimalVector): BigDecimal =
+    ((values zip vector.values) map Function.tupled (_ * _)).sum
 
   /**
     *
-    * @param other
+    * @param vector
     * @return
     */
-  def ∙(other:BigDecimalVector): BigDecimal = dot(other)
+  def ∙(vector: BigDecimalVector): BigDecimal = dot(vector)
 
   /**
     *
@@ -57,6 +57,38 @@ class BigDecimalVector(val values: Seq[BigDecimal]) {
     * @return
     */
   def ᵀ: BigDecimalVector = transpose
+
+  /**
+    *
+    * @param vector
+    * @return
+    */
+  def multiply(vector: BigDecimalVector): BigDecimalVector =
+    BigDecimalVector((vector.values zip values) map Function.tupled (_ * _))
+
+  /**
+    *
+    * @param scalar
+    * @return
+    */
+  def multiply(scalar: BigDecimal): BigDecimalVector =
+    BigDecimalVector(values map (scalar * _))
+
+  /**
+    *
+    * @param vector
+    * @return
+    */
+  def *(vector: BigDecimalVector): BigDecimalVector =
+    multiply(vector)
+
+  /**
+    *
+    * @param scalar
+    * @return
+    */
+  def *(scalar: BigDecimal): BigDecimalVector =
+    multiply(scalar)
 
   /**
     *
@@ -80,12 +112,29 @@ class BigDecimalVector(val values: Seq[BigDecimal]) {
 
 object BigDecimalVector {
 
+  case class BigDecimalSeq(values: Seq[BigDecimal])
+  case class BigDecimalStringSeq(values: Seq[String])
+
+  implicit def toBigDecimalSeq(values: Seq[BigDecimal]): BigDecimalSeq = BigDecimalSeq(values)
+  implicit def fromBigDecimalSeq(seq: BigDecimalSeq): Seq[BigDecimal] = seq.values
+  implicit def toBigDecimalStringSeq(values: Seq[String]): BigDecimalStringSeq = BigDecimalStringSeq(values)
+  implicit def fromBigDecimalStringSeq(seq: BigDecimalStringSeq): Seq[String] = seq.values
+
   /**
     *
     * @param values
     * @return
     */
-  def apply(values: Seq[BigDecimal]): BigDecimalVector =
+  def apply(values: BigDecimalSeq): BigDecimalVector =
     new BigDecimalVector(values)
+
+  def apply(values: BigDecimalStringSeq): BigDecimalVector =
+    new BigDecimalVector(values.map(BigDecimal(_)))
+
+  def apply(values: BigDecimal*): BigDecimalVector =
+    new BigDecimalVector(values)
+
+  def apply(values: String*)(implicit dummyImplicit: DummyImplicit): BigDecimalVector =
+    new BigDecimalVector(values.map(BigDecimal(_)))
 
 }
