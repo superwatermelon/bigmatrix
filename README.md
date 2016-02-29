@@ -14,7 +14,7 @@ a ∙ b
 For transpose:
 
 ```scala
-a.T
+a.ᵀ
 ```
 
 Implement alternative invocations using full word method call:
@@ -26,4 +26,4 @@ a.transpose
 
 ### Contributing
 
-Fork the repo and create a pull request with your changes.
+Please fork the repo and create a pull request with your changes.

@@ -24,63 +24,45 @@
  */
 
 import org.scalatest.FunSpec
-import superwatermelon.math.bigmatrix.BigDecimalVector
+import superwatermelon.math.bigmatrix.{BigDecimalVector, BigDecimalMatrix}
 
-class BigDecimalVectorTest extends FunSpec {
+class BigDecimalMatrixTest extends FunSpec {
 
   import superwatermelon.math.bigmatrix.Implicits._
 
-  describe("BigDecimalVector") {
+  describe("BigDecimalMatrix") {
 
-    describe("Dot product ∙") {
+    it("Can be created from a Seq of Seqs of BigDecimals") {
 
-      it("Calculates [0.2, 0.3, 0.4] ∙ [0.2, 0.5, 0.8] = 0.51") {
-
-        val a = Seq(
-          BigDecimal("0.2"),
-          BigDecimal("0.3"),
+      val matrix: BigDecimalMatrix = Seq(
+        Seq(
+          BigDecimal("12.0"),
           BigDecimal("0.4")
+        ),
+        Seq(
+          BigDecimal("29.3"),
+          BigDecimal("123.76")
         )
-        val b = Seq(
-          BigDecimal("0.2"),
-          BigDecimal("0.5"),
-          BigDecimal("0.8")
-        )
+      )
 
-        assert((a ∙ b) == BigDecimal("0.51"))
-
-      }
-
-      it("Retains precision so that [0.2, 0.5, 0.0] ∙ [0.5, 0.4, 0.3] = 0.3 and not 0.30000000000000004") {
-
-        val a = Seq(
-          BigDecimal("0.2"),
-          BigDecimal("0.5"),
-          BigDecimal("0.0")
-        )
-        val b = Seq(
-          BigDecimal("0.5"),
-          BigDecimal("0.4"),
-          BigDecimal("0.3")
-        )
-
-        assert((a ∙ b) == BigDecimal("0.3"))
-
-      }
+      assert(matrix.isInstanceOf[BigDecimalMatrix])
 
     }
 
-    describe("Transpose ᵀ") {
+    it("Can also be created from a Seq of BigDecimalVectors") {
 
-      val a = Seq(
-        BigDecimal("5.0"),
-        BigDecimal("15.0")
+      val matrix: BigDecimalMatrix = Seq(
+        BigDecimalVector(Seq(
+          BigDecimal("42.3"),
+          BigDecimal("23.5")
+        )),
+        BigDecimalVector(Seq(
+          BigDecimal("321.53"),
+          BigDecimal("230.12")
+        ))
       )
 
-      assert(a.ᵀ == BigDecimalVector(Seq(
-        BigDecimal("5.0"),
-        BigDecimal("15.0")
-      )))
+      assert(matrix.isInstanceOf[BigDecimalMatrix])
 
     }
 

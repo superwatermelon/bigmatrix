@@ -23,13 +23,69 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.superwatermelon.math.bigmatrix
+package superwatermelon.math.bigmatrix
 
+/**
+  *
+  * @param values
+  */
 class BigDecimalVector(val values: Seq[BigDecimal]) {
 
+  /**
+    *
+    * @param other
+    * @return
+    */
   def dot(other: BigDecimalVector): BigDecimal =
-    ((values zip other) map Function.tupled (_ * _)).sum
+    ((values zip other.values) map Function.tupled (_ * _)).sum
 
+  /**
+    *
+    * @param other
+    * @return
+    */
   def ∙(other:BigDecimalVector): BigDecimal = dot(other)
+
+  /**
+    *
+    * @return
+    */
+  def transpose: BigDecimalVector = BigDecimalVector(values)
+
+  /**
+    *
+    * @return
+    */
+  def ᵀ: BigDecimalVector = transpose
+
+  /**
+    *
+    * @return
+    */
+  override def hashCode = values.hashCode()
+
+  /**
+    *
+    * @param other
+    * @return
+    */
+  override def equals(other: Any) = other match {
+    case that: BigDecimalVector =>
+      this.values == that.values
+    case _ =>
+      false
+  }
+
+}
+
+object BigDecimalVector {
+
+  /**
+    *
+    * @param values
+    * @return
+    */
+  def apply(values: Seq[BigDecimal]): BigDecimalVector =
+    new BigDecimalVector(values)
 
 }

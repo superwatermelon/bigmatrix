@@ -7,10 +7,5 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(
-    name := "bigmatrix",
-    libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-      "org.scala-lang.modules" %% "scala-xml" % "1.0.4" % "test"
-    )
+    name := "bigmatrix"
   )
-    

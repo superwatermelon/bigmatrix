@@ -23,14 +23,72 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.superwatermelon.math
+package superwatermelon.math.bigmatrix
 
-package object bigmatrix {
+object Implicits {
 
+  /**
+    *
+    * @param values
+    * @return
+    */
   implicit def toBigDecimalVector(values: Seq[BigDecimal]): BigDecimalVector =
-    return new BigDecimalVector(values)
+    BigDecimalVector(values)
 
+  /**
+    *
+    * @param vector
+    * @return
+    */
   implicit def fromBigDecimalVector(vector: BigDecimalVector): Seq[BigDecimal] =
     vector.values
+
+  /**
+    *
+    * @param values
+    * @return
+    */
+  implicit def toBigDecimalMatrix(values: Seq[Seq[BigDecimal]]): BigDecimalMatrix =
+    BigDecimalMatrix(values.map(toBigDecimalVector))
+
+  /**
+    *
+    * @param matrix
+    * @return
+    */
+  implicit def fromBigDecimalMatrix(matrix: BigDecimalMatrix): Seq[Seq[BigDecimal]] =
+    matrix.values.map(fromBigDecimalVector)
+
+  /**
+    *
+    * @param values
+    * @return
+    */
+  implicit def toBigDecimalMatrixFromVectorSeq(values: Seq[BigDecimalVector]): BigDecimalMatrix =
+    BigDecimalMatrix(values)
+
+  /**
+    *
+    * @param matrix
+    * @return
+    */
+  implicit def fromBigDecimalMatrixToVectorSeq(matrix: BigDecimalMatrix): Seq[BigDecimalVector] =
+    matrix.values
+
+  /**
+    *
+    * @param values
+    * @return
+    */
+  implicit def toBigDecimalMatrixFromVector(values: BigDecimalVector): BigDecimalMatrix =
+    BigDecimalMatrix(Seq(values))
+
+  /**
+    *
+    * @param matrix
+    * @return
+    */
+  implicit def fromBigDecimalMatrixToVector(matrix: BigDecimalMatrix): BigDecimalVector =
+    matrix.values.head
 
 }
